@@ -19,6 +19,7 @@ export default function Feed() {
     null
   );
   const [tagList, setTagList] = useState<Tag[]>([]);
+  const [currentTagInfoIndex, setCurrentTagInfoIndex] = useState<number>(-1);
 
   function onFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPreViewImage(null);
@@ -48,6 +49,18 @@ export default function Feed() {
     setIsClickImage(false);
   }
 
+  function handleViewTagInfo(event: React.MouseEvent, index: number) {
+    event.stopPropagation();
+    setCurrentTagInfoIndex(index);
+  }
+
+  function handleRemoveTagItem(event: React.MouseEvent, id: number) {
+    event.stopPropagation();
+    const filteredTagList = tagList.filter((tag) => tag.id !== id);
+    setTagList(filteredTagList);
+    setCurrentTagInfoIndex(-1);
+  }
+
   return (
     <div className={classes.content}>
       <main className={classes.main}>
@@ -73,6 +86,7 @@ export default function Feed() {
                 {tagList.length > 0 &&
                   tagList.map((tag, index) => (
                     <div
+                      onClick={(event) => handleViewTagInfo(event, index)}
                       className={classes.tag}
                       key={index}
                       style={{
@@ -80,17 +94,38 @@ export default function Feed() {
                         left: `${tag.x - 7.5}px`,
                       }}
                     >
-                      <span></span>
-                      <div className={classes.tagInfo}>
-                        <div className={classes.image}>
-                          <Image
-                            src={tag.image}
-                            alt={tag.name}
-                            width={30}
-                            height={30}
-                          />
+                      <div
+                        className={
+                          currentTagInfoIndex === index
+                            ? `${classes.tagInfo} ${`${classes.active}`}`
+                            : `${classes.tagInfo}`
+                        }
+                      >
+                        <div className={classes.tagContent}>
+                          <div className={classes.image}>
+                            <Image
+                              src={tag.image}
+                              alt={tag.name}
+                              width={30}
+                              height={30}
+                            />
+                          </div>
+                          <div className={classes.tagName}>{tag.name}</div>
                         </div>
-                        <div>{tag.name}</div>
+                        <div className={classes.tagMenu}>
+                          <span
+                            onClick={(event) =>
+                              handleRemoveTagItem(event, tag.id)
+                            }
+                          >
+                            🗑
+                          </span>
+                          <span
+                            onClick={(event) => handleViewTagInfo(event, -1)}
+                          >
+                            ❌
+                          </span>
+                        </div>
                       </div>
                     </div>
                   ))}
