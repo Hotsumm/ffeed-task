@@ -71,11 +71,14 @@ export default function Feed() {
                 </p>
 
                 {tagList.length > 0 &&
-                  tagList.map((tag) => (
+                  tagList.map((tag, index) => (
                     <div
                       className={classes.tag}
-                      key={tag.id}
-                      style={{ top: `${tag.y}px`, left: `${tag.x}px` }}
+                      key={index}
+                      style={{
+                        top: `${tag.y - 7.5}px`,
+                        left: `${tag.x - 7.5}px`,
+                      }}
                     >
                       <span></span>
                       <div className={classes.tagInfo}>
