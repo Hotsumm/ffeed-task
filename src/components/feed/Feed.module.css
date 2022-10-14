@@ -146,7 +146,6 @@
 .tagInfo {
   display: none;
   position: absolute;
-  top: 20px;
 }
 
 .tagInfo.active {

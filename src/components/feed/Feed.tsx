@@ -104,6 +104,10 @@ export default function Feed() {
                             ? `${classes.tagInfo} ${`${classes.active}`}`
                             : `${classes.tagInfo}`
                         }
+                        style={{
+                          top: tag.y >= 330 ? '-50px' : '20px',
+                          right: tag.x >= 250 ? '40px' : '-100px',
+                        }}
                       >
                         <div className={classes.tagContent}>
                           <div className={classes.image}>
