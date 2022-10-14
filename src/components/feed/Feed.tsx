@@ -32,6 +32,10 @@ export default function Feed() {
     setIsEditTag((prev) => !prev);
   }
 
+  function handleCloseModal() {
+    setIsClickImage((prev) => !prev);
+  }
+
   function handleImageClick(
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) {
@@ -39,14 +43,14 @@ export default function Feed() {
 
     const { offsetX, offsetY } = event.nativeEvent;
     setCurrentCoordinate({ x: offsetX, y: offsetY });
-    setIsClickImage(true);
+    handleCloseModal();
   }
 
   function handleSelectProduct(product: Product) {
     if (!currentCoordinate) return;
     setTagList((prev) => [...prev, { ...currentCoordinate, ...product }]);
     setCurrentCoordinate(null);
-    setIsClickImage(false);
+    handleCloseModal();
   }
 
   function handleViewTagInfo(event: React.MouseEvent, index: number) {
@@ -150,7 +154,10 @@ export default function Feed() {
         </div>
       </main>
       {isClickImage && (
-        <TagListModal handleSelectProduct={handleSelectProduct} />
+        <TagListModal
+          handleSelectProduct={handleSelectProduct}
+          handleCloseModal={handleCloseModal}
+        />
       )}
     </div>
   );

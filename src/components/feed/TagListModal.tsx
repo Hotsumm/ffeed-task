@@ -3,17 +3,21 @@ import { productList } from '../../data/productList';
 import Image from 'next/image';
 import { Product } from '../../types/product';
 
-type TagListModalProps = { handleSelectProduct: (product: Product) => void };
+type TagListModalProps = {
+  handleSelectProduct: (product: Product) => void;
+  handleCloseModal: () => void;
+};
 
 export default function TagListModal({
   handleSelectProduct,
+  handleCloseModal,
 }: TagListModalProps) {
   return (
     <div className={classes.modal}>
       <div className={classes.content}>
         <header>
           <h3>제품 태그</h3>
-          <span>X</span>
+          <span onClick={handleCloseModal}>X</span>
         </header>
         <div className={classes.product}>
           <ul>
